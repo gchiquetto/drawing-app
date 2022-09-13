@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap");
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif; }
+
+html {
+  font-size: 62.5%; }
+
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 1rem; }
+
+canvas {
+  border: 1px solid black; }
+
+.palette {
+  display: flex;
+  width: 60rem;
+  column-gap: 2rem;
+  font-size: 3rem; }
+  .palette input {
+    height: 5rem;
+    width: 5rem; }
+  .palette-buttons {
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 5rem;
+    width: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; }
+    .palette-buttons.clear {
+      margin-left: auto; }
+    .palette-buttons.color span {
+      width: 4rem;
+      height: 4rem;
+      background-color: black; }
