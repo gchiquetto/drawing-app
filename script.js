@@ -2,28 +2,62 @@ const color = document.querySelector('.color-picker');
 const btnPlus = document.querySelector('.plus');
 const btnMinus = document.querySelector('.minus');
 const sizeDisplay = document.querySelector('.size');
-
+const btnClose = document.querySelector('.clear');
 
 const canvas = document.querySelector('canvas');
-const canvasOffsetX = canvas.offsetLeft;
-const canvasOffsetY = canvas.offsetTop;
-canvas.width = window.innerWidth - canvasOffsetX;
-canvas.height = window.innerHeight = canvasOffsetY;
-
-
-
-let isPainting = false;
-let lineWidth = 5;
-let startX;
-let startY;
-
+const ctx = canvas.getContext("2d");
+let isPressed = false;
 let size = 10;
+let x;
+let y;
+let currentColor = color.value;
 
+canvas.addEventListener('mousedown', e =>{
+    isPressed = true;
+    x= e.offsetX;
+    y= e.offsetY;
+    console.log(x, y);
+});
 
+canvas.addEventListener('mouseup', e => {
+    isPressed = false;
+    x = undefined;
+    y = undefined;
+    console.log(isPressed)
+});
 
-canvas.addEventListener('click', e => {
-    draw(e);
-})
+canvas.addEventListener('mousemove', e => {
+    if (isPressed){
+        const x2 = e.offsetX;
+        const y2 = e.offsetY;
+        console.log(x, y);
+        drawCircle(x2, y2, currentColor, size);
+        drawLine(x, y, x2, y2, currentColor, size);
+        x = x2;
+        y = y2;
+    }
+});
+
+color.addEventListener('input', ()=> {
+    currentColor = color.value;
+});
+
+function drawCircle(x, y, c, s){
+    ctx.beginPath();
+    ctx.arc(x, y, +s, 0, Math.PI*2);
+    ctx.fillStyle = c;
+    ctx.strokeStyle= c;
+    ctx.fill();
+}
+
+function drawLine(x1, y1, x2, y2, color, s){
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2,y2);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = +s*2;
+    ctx.stroke();
+}
 
 btnPlus.addEventListener('click', () => {
     size <= 50 && size++;
@@ -37,21 +71,7 @@ btnMinus.addEventListener('click', () => {
 
 });
 
-function draw(event){
-    const x = event.clientX;
-    const y = event.clientY;
-
-    if(canvas.getContext){
-        const ctx = canvas.getContext('2d');
-
-        ctx.clearRect(0,0, canvas.width, canvas.height)
-
-        ctx.beginPath();
-        ctx.lineTo(x, y)
-    }
-
-    console.log(x, y);
-
-}
-
-
+btnClose.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    console.log('ss')
+});
